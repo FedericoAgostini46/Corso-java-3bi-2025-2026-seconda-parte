@@ -5,6 +5,7 @@ import java.io.FileReader;
 
 public class Logs {
     private Log dati[];
+    private double incremento;
     private String fileName;
     private String headers[];
     private String separatore;
@@ -12,9 +13,14 @@ public class Logs {
     private String rawData[];
     private int count;
 
-    public Logs(int nrLogs) {
+    public Logs(int nrLogs, double incremento) {
+        this.incremento = incremento;
         this.count = nrLogs;
         this.dati = new Log[nrLogs];
+    }
+
+    public Logs(int nrLogs) {
+        this(nrLogs, 0.25);
     }
 
     public Logs() {
@@ -26,8 +32,43 @@ public class Logs {
 
     }
 
-    private int contaRighe() {
-        return -1;
+    private void aumentaDimensione() {
+        this.aumentaDimensione(0);
+    }
+
+    public int getSpazioLibero() {
+        return this.dati.length - this.count;
+    }
+
+    private void aumentaDimensione(int nrNuoviElementi) {
+        int nuovaDimensione = (int) (this.dati.length * this.incremento) + this.dati.length + nrNuoviElementi;
+        Log tmp[] = new Log[nuovaDimensione];
+        for (int i = 0; i < this.dati.length; i++) {
+            tmp[i] = this.dati[i];
+        }
+        this.dati = tmp;
+    }
+
+    private int contaRighe(String fileName, boolean intestazione) {
+        try {
+            FileReader fr = new FileReader(fileName);
+            BufferedReader br = new BufferedReader(fr);
+            
+            int nrRighe = 0;
+            String riga;
+
+            while ((riga = br.readLine()) != null) {
+                nrRighe++;
+            }
+
+            if(intestazione) {
+                nrRighe--;
+            }
+            return nrRighe;
+            
+        } catch (Exception e) {
+            return -1;
+        }
     }
 
     public void caricaFile(String fileName, boolean intestazione, String separatore) {
