@@ -45,6 +45,11 @@ public class Libro {
         return autore;
     }
 
+    public String getISBN()
+    {
+        return ISBN;
+    }
+
     public void setAutore(String autore) throws Exception {
         if (autore == null || autore.isBlank()) {
             throw new Exception("Autore non corretto.");
@@ -103,5 +108,43 @@ public class Libro {
     public void restituisciLibro(){
         this.disponibile = true;
     }
-            
+           
+    
+    @Override
+    public boolean equals(Object obj) {
+        
+        // se gli indirizzi dell'oggetto corrente e del parametro obj sono uguali
+        // vuol dire che puntano allo stesso oggetto (libro)
+        if (this == obj) {
+            return true;
+        }
+
+        // se l'oggetto che vuoi confrontare con this è nullo,
+        // sicuramente sarà diverso da this
+        if (obj == null) {
+            return false;
+        }
+
+        // se il parametro obj appartiene ad una classe
+        // diversa da quella dell'oggetto corrente this (di tipo Libro), 
+        // sicuramente, i due oggetti saranno diversi
+        if (this.getClass() != obj.getClass()) {
+            return false;
+        }
+        
+        // se arrivo qui, this e obj contengono riferimenti ad oggetti di tipo Libro
+        // faccio diventare l'oggetto referenziato tramite obj di tipo Libro
+        Libro altroLibro = (Libro)obj;
+
+        /*if (this.getISBN().equals(altroLibro.getISBN())) {
+            return true;
+        }
+        else
+        {
+            return false;
+        }*/
+
+        return this.getISBN().equals(altroLibro.getISBN());
+    }
+
 }
