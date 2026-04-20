@@ -64,4 +64,45 @@ public class CollezioneLibri {
         
         return -1;
     }
+
+    public boolean remove (Libro libro) 
+     int index = indexOf(libro);
+
+    // se il libro non esiste
+    if (index < 0) {
+        return false;
+    }
+
+    // shift a sinistra per mantenere l'ordine
+    for (int i = index; i < count - 1; i++) {
+        collezione[i] = collezione[i + 1];
+    }
+
+    // pulizia ultima posizione
+    collezione[count - 1] = null;
+    count--;
+
+    return true;
+
+    }
+
+    public boolean removeNoOrder(Libro libro) 
+    {
+    int index = indexOf(libro);
+
+    // se il libro non esiste
+    if (index < 0) {
+        return false;
+    }
+
+    // sostituisco con l'ultimo elemento
+    collezione[index] = collezione[count - 1];
+
+    // pulizia ultima posizione
+    collezione[count - 1] = null;
+    count--;
+
+    return true;
+    
+    }
 }
