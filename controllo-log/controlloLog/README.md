@@ -1,18 +1,18 @@
-## Getting Started
+## Gestione Utenti
+Il programma deve essere in grado di gestire una collezione di Utenti. Ogni utente deve disporre delle informazioni necessario al calcolo del codice fiscale. NB: il codice fiscale NON deve essere memorizzato, ma restituito da un metodo. I codici dei comuni possono essere trovati in Internet. La classe Comuni deve disporre di un metodo in grado di leggere il file txt/csv per caricare i dati dei comuni.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
-
-## Folder Structure
-
-The workspace contains two folders by default, where:
-
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
-
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+### Classi
+- Utente:
+nome: String
+cognome: String
+...
+- Comune:
+codice: String
+nome: String
+...
+- Comuni:
+array di Comune
+caricaDati()
+- Utenti:
+array di Utente
+salva(nomefile): salva i dati degli utenti su un file CSV
