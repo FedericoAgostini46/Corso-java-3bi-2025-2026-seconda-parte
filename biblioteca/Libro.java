@@ -147,4 +147,49 @@ public class Libro {
         return this.getISBN().equals(altroLibro.getISBN());
     }
 
+    public static String normalizzaISBN(String isbn) throws Exception {
+    if (isbn == null) {
+        throw new Exception("ISBN nullo");
+    }
+
+    // rimuove spazi e trattini
+    isbn = isbn.replace(" ", "").replace("-", "");
+
+    // converte in maiuscolo
+    isbn = isbn.toUpperCase();
+
+    // controllo lunghezza
+    if (isbn.length() != 10 && isbn.length() != 13) {
+        throw new Exception("ISBN non valido: lunghezza errata");
+    }
+
+    // caso ISBN-13: solo cifre
+    if (isbn.length() == 13) {
+        for (int i = 0; i < 13; i++) {
+            if (!Character.isDigit(isbn.charAt(i))) {
+                throw new Exception("ISBN-13 deve contenere solo cifre");
+            }
+        }
+    }
+
+    // caso ISBN-10
+    if (isbn.length() == 10) {
+        // primi 9 devono essere cifre
+        for (int i = 0; i < 9; i++) {
+            if (!Character.isDigit(isbn.charAt(i))) {
+                throw new Exception("ISBN-10 non valido");
+            }
+        }
+
+        // ultimo può essere cifra oppure X
+        char ultimo = isbn.charAt(9);
+        if (!Character.isDigit(ultimo) && ultimo != 'X') {
+            throw new Exception("ISBN-10 non valido: ultimo carattere errato");
+        }
+    }
+
+    return isbn;
+}
+
+
 }
