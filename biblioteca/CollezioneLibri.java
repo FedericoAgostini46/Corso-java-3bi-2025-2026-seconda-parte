@@ -117,20 +117,96 @@ public class CollezioneLibri {
     }
 
     public boolean contains(Libro libro) {
+    // riuso indexOf per evitare duplicazione di codice
+    return indexOf(libro) >= 0;
+}
 
+public Libro getLibro(int index) {
+    // controllo indice valido
+    if (index < 0 || index >= count) {
+        return null; // oppure potresti lanciare un'eccezione
     }
 
-    public Libro getLibro(int index) {
+    return collezione[index];
+}
 
+// restituisce il primo libro che incontra che ha il maggior numero di pagine
+public Libro libroPiuLungo() {
+    if (count == 0) {
+        return null;
     }
 
-    // restituisce il primo libro che incontra che ha il maggior numero di pagine
-    public Libro libroPiuLungo() {
+    Libro max = collezione[0];
 
+    for (int i = 1; i < count; i++) {
+        if (collezione[i].getNumeroPagine() > max.getNumeroPagine()) {
+            max = collezione[i];
+        }
     }
-    
-    // restituisce i libri che hanno il maggior numero di pagine
-    public Libro[] libriPiuLunghi() {
 
+    return max;
+}
+
+// restituisce i libri che hanno il maggior numero di pagine
+public Libro[] libriPiuLunghi() {
+    if (count == 0) {
+        return new Libro[0];
+    }
+
+    // trovo numero massimo di pagine
+    int maxPagine = collezione[0].getNumeroPagine();
+
+    for (int i = 1; i < count; i++) {
+        if (collezione[i].getNumeroPagine() > maxPagine) {
+            maxPagine = collezione[i].getNumeroPagine();
+        }
+    }
+
+    // conto quanti libri hanno quel numero di pagine
+    int quanti = 0;
+    for (int i = 0; i < count; i++) {
+        if (collezione[i].getNumeroPagine() == maxPagine) {
+            quanti++;
+        }
+    }
+
+    // creo array risultato
+    Libro[] risultato = new Libro[quanti];
+    int j = 0;
+
+    for (int i = 0; i < count; i++) {
+        if (collezione[i].getNumeroPagine() == maxPagine) {
+            risultato[j++] = collezione[i];
+        }
+    }
+
+    return risultato;
+}
+
+// unisce, senza duplicati, un'altra collezione
+public CollezioneLibri unione(CollezioneLibri altraCollezione) {
+    // nuova collezione con spazio sufficiente
+    CollezioneLibri nuova = new CollezioneLibri(this.count + altraCollezione.count);
+
+    try {
+        // aggiungo tutti i libri della collezione corrente
+        for (int i = 0; i < this.count; i++) {
+            nuova.add(this.collezione[i]);
+        }
+
+        // aggiungo quelli dell'altra evitando duplicati (add già lo controlla)
+        for (int i = 0; i < altraCollezione.count; i++) {
+            Libro libro = altraCollezione.collezione[i];
+
+            if (!nuova.contains(libro)) {
+                nuova.add(libro);
+            }
+        }
+    } catch (Exception e) {
+        // in teoria non dovrebbe succedere, ma lo gestiamo
+        e.printStackTrace();
+    }
+
+    return nuova;
     }
 }

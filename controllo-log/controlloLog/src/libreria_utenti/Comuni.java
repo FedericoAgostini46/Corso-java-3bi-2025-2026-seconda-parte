@@ -44,7 +44,7 @@ public class Comuni {
     private void caricaFile(String fileName, boolean intestazione) throws Exception {
         try {
             FileReader fr = new FileReader(fileName);
-            BufferedReader br = new BufferedReader(fr);
+            BufferedReader br = new BufferedReader(fr); 
             String riga;
             int dimArray = this.contaRighe(fileName, intestazione);
             this.comuni = new Comune[dimArray];
